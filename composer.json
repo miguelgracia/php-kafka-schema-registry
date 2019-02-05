@@ -1,5 +1,5 @@
 {
-    "name": "jsola/lumen-schema-registry",
+    "name": "jsolam/lumen-schema-registry",
     "license": "MIT",
     "type": "library",
     "autoload": {
