@@ -1,5 +1,5 @@
 {
-    "name": "jsola/lumen.kafka.schema-registry",
+    "name": "jsola/lumen-schema-registry",
     "license": "MIT",
     "type": "library",
     "autoload": {
