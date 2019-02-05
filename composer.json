@@ -10,7 +10,8 @@
     "require": {
         "php": ">=7.1.0",
         "ext-rdkafka": "^3.0",
-        "wikimedia/avro": "^1.7"
+        "wikimedia/avro": "^1.7",
+        "guzzlehttp/guzzle": "6.3"
     },
     "require-dev": {
         "kwn/php-rdkafka-stubs": "^0.0.5"
