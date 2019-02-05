@@ -1,0 +1,19 @@
+{
+    "name": "jsola/lumen.kafka.schema-registry",
+    "license": "proprietary",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.1.0",
+        "ext-rdkafka": "^3.0",
+        "wikimedia/avro": "^1.7",
+        "guzzle/guzzle": "^3.9"
+    },
+    "require-dev": {
+        "kwn/php-rdkafka-stubs": "^0.0.5"
+    }
+}
