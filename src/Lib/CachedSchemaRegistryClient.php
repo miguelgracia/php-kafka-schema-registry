@@ -1,8 +1,10 @@
 <?php
 namespace Kafka\SchemaRegistry\Lib;
 
-use Guzzle\Http\Client;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 
+use AvroSchema;
 /**
  * Client that talk to a schema registry over http
  *
@@ -37,7 +39,7 @@ class CachedSchemaRegistryClient
     {
         $this->maxSchemasPerSubject = $maxSchemasPerSubject;
 
-        $this->client = new Client($url);
+        $this->client = new Client(['base_uri' => $url]);
     }
 
     /**
@@ -124,6 +126,7 @@ class CachedSchemaRegistryClient
     protected function cacheSchemaDetails($subject, AvroSchema $schema)
     {
         $url = sprintf('/subjects/%s', $subject);
+        
         list($status, $response) = $this->sendRequest($url, 'POST', json_encode(['schema' => (string) $schema]));
         if (!($status >= 200 || $status < 300)) {
             throw new \RuntimeException('Unable to get schema details. Error code: '.$status);
@@ -167,22 +170,22 @@ class CachedSchemaRegistryClient
     public function getBySubjectAndVersion($subject, $version)
     {
         if (isset($this->subjectVersionToSchema[$subject][$version])) {
-            return $this->subjectVersionToSchema[$subject][$version];
+            //return $this->subjectVersionToSchema[$subject][$version];
         }
 
         $url = sprintf('/subjects/%s/versions/%d', $subject, $version);
         list($status, $response) = $this->sendRequest($url, 'GET');
-
+        
         if ($status === 404) {
             throw new RuntimeException('Schema not found');
         } else if (!($status >= 200 || $status < 300)) {
             throw new \RuntimeException('Unable to get schema for the specific ID: '.$status);
         }
-
+        
         $schema = AvroSchema::parse($response['schema']);
-
+        
         $this->cacheSchemaDetails($subject, $schema);
-
+        
         return $schema;
     }
 
@@ -197,22 +200,22 @@ class CachedSchemaRegistryClient
 
         switch ($method) {
             case 'GET':
-                $request = $this->client->get($url, $headers);
+                $response = $this->client->get($url, ['headers' => $headers]);
                 break;
             case 'POST':
-                $request = $this->client->post($url, $headers, $body);
+                $response = $this->client->post($url, ['headers' => $headers, 'body' => $body]);
                 break;
             case 'PUT':
-                $request = $this->client->put($url, $headers, $body);
+                $response = $this->client->put($url, ['headers' => $headers, 'body' => $body]);
                 break;
             case 'DELETE':
-                $request = $this->client->delete($url, $headers);
+                $response = $this->client->delete($url, ['headers' => $headers]);
                 break;
             default:
                 throw new \RuntimeException('Invalid HTTP method');
         }
-
-        $response = $this->client->send($request);
+        
+        //$response = $this->client->send($request);
 
         return [$response->getStatusCode(), json_decode($response->getBody(true), true)];
     }

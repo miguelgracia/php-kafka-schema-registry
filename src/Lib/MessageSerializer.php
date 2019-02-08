@@ -1,6 +1,15 @@
 <?php
 namespace Kafka\SchemaRegistry\Lib;
 
+use AvroStringIO;
+use AvroIOBinaryEncoder;
+use AvroIODatumWriter;
+use AvroIODatumReader;
+use AvroSchema;
+use AvroIO;
+use AvroIOBinaryDecoder;
+
+
 class MessageSerializer
 {
     const MAGIC_BYTE_SCHEMAID = 0;
