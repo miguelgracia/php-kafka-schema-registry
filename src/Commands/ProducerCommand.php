@@ -2,7 +2,7 @@
 namespace Kafka\SchemaRegistry\Commands;
 
 use Kafka\SchemaRegistry\Exceptions\SchemaNotPreparedException;
-use Kafka\SchemaRegistry\Constants\KafkaConfParam;
+use Kafka\SchemaRegistry\Constants\ProducerConfParam;
 use Kafka\SchemaRegistry\Constants\TopicConfParam;
 use Kafka\SchemaRegistry\Lib\AvroProducer;
 
@@ -25,14 +25,23 @@ class ProducerCommand extends KafkaCommand
     {
         $this->schemaRegistryUrl = ($schemaRegistryUrl != null) ? $schemaRegistryUrl : env('SCHEMA_REGISTRY_URL');
         $this->brokerList        = ($brokerList != null) ? $brokerList : env('KAFKA_BROKERS');
-
+        
         if(null === $this->getSchemaSubject() || null === $this->getSchemaVersion()){
             throw new SchemaNotPreparedException('You must set the schema subject and schema version via setSchema($subject, $version = 1) before call prepare() method', 10);
         }
 
+        $this->initConfIfNeeded();
+
         $this->prepareSchema();
         
-        $this->kafka = new \RdKafka\Producer();
+        $this->conf->set(ProducerConfParam::COMPRESSION_TYPE, 'snappy');
+        $this->conf->set(ProducerConfParam::LINGER_MS, '20');
+        $this->conf->set(ProducerConfParam::BROKER_VERSION_FALLBACK, '2.0.1');
+        $this->conf->set(ProducerConfParam::QUEUE_BUFFERING_MAX_KBYTES, (string)32*1024);
+
+        $this->conf->setDefaultTopicConf($this->topicConf);
+
+        $this->kafka = new \RdKafka\Producer($this->conf);
         $this->kafka->setLogLevel(LOG_DEBUG);
         $this->kafka->addBrokers($this->brokerList);
     }
@@ -41,7 +50,7 @@ class ProducerCommand extends KafkaCommand
     {
         echo "Producing " . sizeof($data). " messages to kafka topic '$topic'\n";
         
-        $producer = new AvroProducer($this->kafka->newTopic($topic),$this->schemaRegistryUrl, null, $this->schema, ['register_missing_schemas' => true]);
+        $producer = new AvroProducer($this->kafka->newTopic($topic),$this->schemaRegistryUrl, $this->keySchema, $this->schema, ['register_missing_schemas' => false]);
 
         $start = microtime(true);
         
@@ -51,21 +60,13 @@ class ProducerCommand extends KafkaCommand
             $format = mt_rand(0, 2);
             $format = $format === 2 ? null : $format;
 
-            $producer->produce(RD_KAFKA_PARTITION_UA, 0, (array)$item, $key, null, null, $format);
+            $producer->produce(RD_KAFKA_PARTITION_UA, 0, $item, $key, null, null, null);
         }
 
         $end = microtime(true);
 
         echo 'Published: '.($end - $start)."\n";
     
-    }
-
-    public function getConfigParams($property = null){
-        return ConfigHelper::getConfigParams(self::CONFIG_CONTEXT, $property);
-    }
-
-    public function getTopicConfigParams($property = null){
-        $this->table(ConfigHelper::getTopicConfigParams(self::CONFIG_CONTEXT, $property));
     }
 
 }
