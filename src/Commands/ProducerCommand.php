@@ -23,8 +23,8 @@ class ProducerCommand extends KafkaCommand
      */
     public function prepare($schemaRegistryUrl = null, $brokerList = null)
     {
-        $this->schemaRegistryUrl = ($schemaRegistryUrl != null) ? $schemaRegistryUrl : env('SCHEMA_REGISTRY_URL');
-        $this->brokerList        = ($brokerList != null) ? $brokerList : env('KAFKA_BROKERS');
+        
+        $this->setSchemaRegistryAndBrokerList($schemaRegistryUrl, $brokerList);
         
         if(null === $this->getSchemaSubject() || null === $this->getSchemaVersion()){
             throw new SchemaNotPreparedException('You must set the schema subject and schema version via setSchema($subject, $version = 1) before call prepare() method', 10);
@@ -39,8 +39,6 @@ class ProducerCommand extends KafkaCommand
         $this->conf->set(ProducerConfParam::BROKER_VERSION_FALLBACK, '2.0.1');
         $this->conf->set(ProducerConfParam::QUEUE_BUFFERING_MAX_KBYTES, (string)32*1024);
 
-        $this->conf->setDefaultTopicConf($this->topicConf);
-
         $this->kafka = new \RdKafka\Producer($this->conf);
         $this->kafka->setLogLevel(LOG_DEBUG);
         $this->kafka->addBrokers($this->brokerList);
@@ -48,8 +46,11 @@ class ProducerCommand extends KafkaCommand
 
     public function produce($topic, Array $data, $key = null)
     {
-        echo "Producing " . sizeof($data). " messages to kafka topic '$topic'\n";
+        //TODO Log it
+        //echo "Producing " . sizeof($data). " messages to kafka topic '$topic'\n";
         
+        $this->conf->setDefaultTopicConf($this->topicConf);
+
         $producer = new AvroProducer($this->kafka->newTopic($topic),$this->schemaRegistryUrl, $this->keySchema, $this->schema, ['register_missing_schemas' => false]);
 
         $start = microtime(true);
@@ -60,12 +61,13 @@ class ProducerCommand extends KafkaCommand
             $format = mt_rand(0, 2);
             $format = $format === 2 ? null : $format;
 
-            $producer->produce(RD_KAFKA_PARTITION_UA, 0, $item, $key, null, null, null);
+            $producer->produce(RD_KAFKA_PARTITION_UA, 0, is_array($item) ? $item : (array)$item, $key, null, null, null);
         }
 
         $end = microtime(true);
 
-        echo 'Published: '.($end - $start)."\n";
+        //TODO Log it
+        //echo 'Published: '.($end - $start)."\n";
     
     }
 

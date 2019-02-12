@@ -3,6 +3,8 @@ namespace Kafka\SchemaRegistry\Commands;
 
 use Illuminate\Console\Command;
 use Kafka\SchemaRegistry\Lib\CachedSchemaRegistryClient;
+use Kafka\SchemaRegistry\Exceptions\BadBrokerListException;
+use Kafka\SchemaRegistry\Exceptions\BadSchemaRegistryException;
 use AvroSchema;
 
 /**
@@ -155,6 +157,17 @@ abstract class KafkaCommand extends Command
         }
 
         return (substr($haystack, -$length) === $needle);
+    }
+
+    protected function setSchemaRegistryAndBrokerList($schemaRegistryUrl = null, $brokerList = null)
+    {
+
+        $this->schemaRegistryUrl = ($schemaRegistryUrl != null) ? $schemaRegistryUrl : env('SCHEMA_REGISTRY_URL');
+        $this->brokerList        = ($brokerList != null) ? $brokerList : env('KAFKA_BROKERS');
+
+        if($this->schemaRegistryUrl == null) throw new BadSchemaRegistryException("You must provide a schema registry url");
+
+        if($this->brokerList == null) throw new BadBrokerListException("You must provide a broker list");
     }
 }
 

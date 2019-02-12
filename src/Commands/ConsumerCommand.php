@@ -10,6 +10,7 @@ use Kafka\SchemaRegistry\Interfaces\ConsumerCallbackInterface;
 use Kafka\SchemaRegistry\Exceptions\BadCallbackException;
 
 
+
 class ConsumerCommand extends KafkaCommand
 {
 
@@ -23,9 +24,7 @@ class ConsumerCommand extends KafkaCommand
 
     public function prepare($schemaRegistryUrl = null, $brokerList = null)
     {
-
-        $this->schemaRegistryUrl = ($schemaRegistryUrl != null) ? $schemaRegistryUrl : env('SCHEMA_REGISTRY_URL');
-        $this->brokerList        = ($brokerList != null) ? $brokerList : env('KAFKA_BROKERS');
+        $this->setSchemaRegistryAndBrokerList($schemaRegistryUrl, $brokerList);
 
         $this->initConfIfNeeded();
 
@@ -52,15 +51,18 @@ class ConsumerCommand extends KafkaCommand
         // 'smallest': start from the beginning
         $this->topicConf->set(TopicConfParam::AUTO_OFFSET_RESET, 'smallest');
 
+    }
+
+    public function listen($topics, $callback)
+    {
+        
+        $this->callback = $callback;
+        
+        $this->checkCallback();
+        
         // Set the configuration to use for subscribed/assigned topics
         $this->conf->setDefaultTopicConf($this->topicConf);
 
-    }
-
-    public function listen($topics, $callback){
-        $this->callback = $callback;
-        $this->checkCallback();
-        
         $this->kafka = new AvroConsumer($this->conf, $this->schemaRegistryUrl, ['register_missing_schemas' => false]);
 
         $this->kafka->subscribe($topics);
@@ -138,9 +140,11 @@ class ConsumerCommand extends KafkaCommand
         }
     }
 
-    private function executeCallback($message){
+    private function executeCallback($message)
+    {
         $this->isCallbackAClass ? (new $this->callback($message))->consume() : ($this->callback)($message);
     }
+
 }
 
 ?>
