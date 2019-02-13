@@ -1,7 +1,6 @@
 <?php 
-namespace Kafka\SchemaRegistry\Commands;
+namespace Kafka\SchemaRegistry\Traits;
 
-use Illuminate\Console\Command;
 use Kafka\SchemaRegistry\Lib\CachedSchemaRegistryClient;
 use Kafka\SchemaRegistry\Exceptions\BadBrokerListException;
 use Kafka\SchemaRegistry\Exceptions\BadSchemaRegistryException;
@@ -10,7 +9,7 @@ use AvroSchema;
 /**
  * Command extends for kafka wich contains the needed common functions for consumers and producers
  */
-abstract class KafkaCommand extends Command
+trait KafkaTrait
 {
 
     protected $conf;
@@ -26,15 +25,6 @@ abstract class KafkaCommand extends Command
     protected $keySchema            = null;
     protected $kafka             = null;
 
-    /**
-     * Undocumented function
-     *
-     * @param string $schemaRegistryUrl
-     * @param string $brokerList
-     * @return void
-     */
-    abstract public function prepare($schemaRegistryUrl = null, $brokerList = null);
-    
     /**
      * Init both configs if were needed
      *
@@ -102,7 +92,11 @@ abstract class KafkaCommand extends Command
 
         $cachedSchema    = new CachedSchemaRegistryClient($this->schemaRegistryUrl);
         $this->schema    = $cachedSchema->getBySubjectAndVersion($this->schemaSubject, $this->schemaVersion);
-        $this->keySchema = $cachedSchema->getBySubjectAndVersion($this->keySchemaSubject, $this->keySchemaVersion);
+        if($this->keySchemaSubject !== null)
+        {
+            $this->keySchema = $cachedSchema->getBySubjectAndVersion($this->keySchemaSubject, $this->keySchemaVersion);
+        }
+            
     }
 
     /**

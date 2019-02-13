@@ -1,14 +1,14 @@
 # lumen.kafka.schema-registry
 
-[![release](http://github-release-version.herokuapp.com/github/jsolam/lumen-schema-registry/release.svg?style=flat)](https://github.com/jsolam/lumen-schema-registry/releases/latest)
+[![release](http://github-release-version.herokuapp.com/github/jsolam/php-kafka-schema-registry/release.svg?style=flat)](https://github.com/jsolam/php-kafka-schema-registry/releases/latest)
 
-Library to consume and produce in Apache Kafka < 2.1 and Schema Registry, using Lumen or Laravel console commands. This lib use the base present in Nicofuma/poc-php-kafka lib.
+Library to consume and produce in Apache Kafka < 2.1 and Schema Registry, using php traits. This lib use the base present in Nicofuma/poc-php-kafka lib.
 
 ## Installation
 
 ```
 
-composer require jsolam/lumen-schema-registry 1.0.*
+composer require jsolam/php-kafka-schema-registry 1.0.*
 
 ```
 ## .env Params
@@ -24,12 +24,16 @@ KAFKA_BROKERS=xx.xx.xx.xx:9092,xx.xx.xx.xx:9093...
 KAFKA_CONSUMER_GROUP_ID=myConsumerGroupId
 
 ```
+### Notes
+ * The examples use laravel commands, but you can use it in any php class
+ * This vendor use **subject and version** to encode / decode records
 
 ## Consumption Usage
 
 ```
-class MyConsumerCommand extends \Kafka\SchemaRegistry\Commands\ConsumerCommand
+class MyConsumerCommand
 {
+    use \Kafka\SchemaRegistry\Traits\ConsumerTrait;
     ...
     
     public function handle()
@@ -82,8 +86,9 @@ Your CallbackClass must implements Kafka\SchemaRegistry\Interfaces\ConsumerCallb
 ## Production Usage
 
 ```
-class MyProducerCommand extends \Kafka\SchemaRegistry\Commands\PoducerCommand
+class MyProducerCommand
 {
+    use \Kafka\SchemaRegistry\Traits\ProducerTrait;
     ...
     
     public function handle()

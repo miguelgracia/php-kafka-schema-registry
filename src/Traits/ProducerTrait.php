@@ -1,19 +1,18 @@
 <?php 
-namespace Kafka\SchemaRegistry\Commands;
+namespace Kafka\SchemaRegistry\Traits;
 
 use Kafka\SchemaRegistry\Exceptions\SchemaNotPreparedException;
 use Kafka\SchemaRegistry\Constants\ProducerConfParam;
 use Kafka\SchemaRegistry\Constants\TopicConfParam;
 use Kafka\SchemaRegistry\Lib\AvroProducer;
-
+use Kafka\SchemaRegistry\Lib\MessageSerializer;
 /**
  * Undocumented class
  */
-class ProducerCommand extends KafkaCommand
+trait ProducerTrait
 {
-
-    private const CONFIG_CONTEXT = 'P';
-
+    use KafkaTrait;
+    
     /**
      * //TODO comment function
      *
@@ -39,9 +38,6 @@ class ProducerCommand extends KafkaCommand
         $this->conf->set(ProducerConfParam::BROKER_VERSION_FALLBACK, '2.0.1');
         $this->conf->set(ProducerConfParam::QUEUE_BUFFERING_MAX_KBYTES, (string)32*1024);
 
-        $this->kafka = new \RdKafka\Producer($this->conf);
-        $this->kafka->setLogLevel(LOG_DEBUG);
-        $this->kafka->addBrokers($this->brokerList);
     }
 
     public function produce($topic, Array $data, $key = null)
@@ -50,6 +46,11 @@ class ProducerCommand extends KafkaCommand
         //echo "Producing " . sizeof($data). " messages to kafka topic '$topic'\n";
         
         $this->conf->setDefaultTopicConf($this->topicConf);
+
+        $this->kafka = new \RdKafka\Producer($this->conf);
+        
+        $this->kafka->setLogLevel(LOG_DEBUG);
+        $this->kafka->addBrokers($this->brokerList);
 
         $producer = new AvroProducer($this->kafka->newTopic($topic),$this->schemaRegistryUrl, $this->keySchema, $this->schema, ['register_missing_schemas' => false]);
 
@@ -61,7 +62,7 @@ class ProducerCommand extends KafkaCommand
             $format = mt_rand(0, 2);
             $format = $format === 2 ? null : $format;
 
-            $producer->produce(RD_KAFKA_PARTITION_UA, 0, is_array($item) ? $item : (array)$item, $key, null, null, null);
+            $producer->produce(RD_KAFKA_PARTITION_UA, 0, is_array($item) ? $item : (array)$item, $key, null, null, MessageSerializer::MAGIC_BYTE_SUBJECT_VERSION);
         }
 
         $end = microtime(true);

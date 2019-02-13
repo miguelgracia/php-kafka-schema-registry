@@ -1,5 +1,5 @@
 <?php 
-namespace Kafka\SchemaRegistry\Commands;
+namespace Kafka\SchemaRegistry\Traits;
 
 use Kafka\SchemaRegistry\Helpers\ConfigHelper;
 
@@ -11,10 +11,9 @@ use Kafka\SchemaRegistry\Exceptions\BadCallbackException;
 
 
 
-class ConsumerCommand extends KafkaCommand
+trait ConsumerTrait
 {
-
-    private const CONFIG_CONTEXT = 'C';
+    use KafkaTrait;
 
     protected $consumerGroupId = null;
     protected $consumer = null;
@@ -22,7 +21,7 @@ class ConsumerCommand extends KafkaCommand
     private $isCallbackAClass = false;
     private $callback = null;
 
-    public function prepare($schemaRegistryUrl = null, $brokerList = null)
+    public function prepare($schemaRegistryUrl = null, $brokerList = null, $tvvv = null)
     {
         $this->setSchemaRegistryAndBrokerList($schemaRegistryUrl, $brokerList);
 
