@@ -1,4 +1,4 @@
-# lumen.kafka.schema-registry
+# php-kafka-schema-registry
 
 [![release](http://github-release-version.herokuapp.com/github/jsolam/php-kafka-schema-registry/release.svg?style=flat)](https://github.com/jsolam/php-kafka-schema-registry/releases/latest)
 
