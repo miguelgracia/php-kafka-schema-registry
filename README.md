@@ -61,7 +61,20 @@ class MyConsumerCommand
         $this->listen(
             ['topic_xxx'], 
             function($message){
-              //Do something $message->payload
+              //Exists a helper to handle returned message with some getters and setters
+              //Getters returns an object if key or value are arrays
+              
+              $kafkaMessage = new \Kafka\SchemaRegistry\Helpers\KafkaMessage($message);
+              dd($kafkaMessage->getKey(), $kafkaMessage->getValue(), $kafkaMessage->getTopic());
+              /*
+              For this value
+              $item = [
+                "time" => time(),
+                "site" => "www.hola.es",
+                "ip"   => "192.168.2.".mt_rand(0, 255)
+              ];
+              $kafkaMessage->getValue()->time;
+              */
             }
         );
     }`
