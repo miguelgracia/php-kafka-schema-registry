@@ -1,4 +1,5 @@
 <?php
+
 namespace Kafka\SchemaRegistry\Lib;
 
 use RdKafka\ProducerTopic;
@@ -16,8 +17,8 @@ class AvroProducer
 
     public function __construct(ProducerTopic $producer, $registryUrl, $defaultKeySchema = null, $defaultValueSchema = null, $options = [])
     {
-        $this->producer = $producer;
-        $this->defaultKeySchema = $defaultKeySchema;
+        $this->producer           = $producer;
+        $this->defaultKeySchema   = $defaultKeySchema;
         $this->defaultValueSchema = $defaultValueSchema;
 
         $this->serializer = new MessageSerializer(new CachedSchemaRegistryClient($registryUrl), $options);
@@ -25,7 +26,7 @@ class AvroProducer
 
     public function produce($partition, $msgflags, $value, $key = null, $keySchema = null, $valueSchema = null, $format = null)
     {
-        $keySchema = $keySchema ?: $this->defaultKeySchema;
+        $keySchema   = $keySchema ?: $this->defaultKeySchema;
         $valueSchema = $valueSchema ?: $this->defaultValueSchema;
 
         if ($value && $valueSchema) {

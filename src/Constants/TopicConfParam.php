@@ -1,4 +1,5 @@
 <?php
+
 namespace Kafka\SchemaRegistry\Constants;
 
 /**
@@ -7,7 +8,6 @@ namespace Kafka\SchemaRegistry\Constants;
  */
 class TopicConfParam
 {
-
     /**
      * @description: This field indicates the number of acknowledgements the leader broker must
      *               receive from ISR brokers before responding to the request: *0*=Broker does not
@@ -20,7 +20,7 @@ class TopicConfParam
      * @defaultValue: -1
      * @importance: high
      */
-    public const REQUEST_REQUIRED_ACKS = "request.required.acks";
+    public const REQUEST_REQUIRED_ACKS = 'request.required.acks';
 
     /**
      * @description: Alias for `request.required.acks`: This field indicates the number of acknowledgements
@@ -35,7 +35,7 @@ class TopicConfParam
      * @defaultValue: -1
      * @importance: high
      */
-    public const ACKS = "acks";
+    public const ACKS = 'acks';
 
     /**
      * @description: The ack timeout of the producer request in milliseconds. This value is only enforced by the
@@ -46,7 +46,7 @@ class TopicConfParam
      * @defaultValue: 5000
      * @importance: medium
      */
-    public const REQUEST_TIMEOUT_MS = "request.timeout.ms";
+    public const REQUEST_TIMEOUT_MS = 'request.timeout.ms';
 
     /**
      * @description: Local message timeout. This value is only enforced locally and limits the time a produced
@@ -59,7 +59,7 @@ class TopicConfParam
      * @defaultValue: 300000
      * @importance: high
      */
-    public const MESSAGE_TIMEOUT_MS = "message.timeout.ms";
+    public const MESSAGE_TIMEOUT_MS = 'message.timeout.ms';
 
     /**
      * @description: Alias for `message.timeout.ms`: Local message timeout. This value is only enforced locally
@@ -72,7 +72,7 @@ class TopicConfParam
      * @defaultValue: 300000
      * @importance: high
      */
-    public const DELIVERY_TIMEOUT_MS = "delivery.timeout.ms";
+    public const DELIVERY_TIMEOUT_MS = 'delivery.timeout.ms';
 
     /**
      * @description: **EXPERIMENTAL**: subject to change or removal. **DEPRECATED** Producer queuing strategy.
@@ -83,7 +83,7 @@ class TopicConfParam
      * @defaultValue: fifo
      * @importance: low
      */
-    public const QUEUING_STRATEGY = "queuing.strategy";
+    public const QUEUING_STRATEGY = 'queuing.strategy';
 
     /**
      * @description: **DEPRECATED** No longer used. <br>*Type: boolean*
@@ -92,7 +92,7 @@ class TopicConfParam
      * @defaultValue: false
      * @importance: low
      */
-    public const PRODUCE_OFFSET_REPORT = "produce.offset.report";
+    public const PRODUCE_OFFSET_REPORT = 'produce.offset.report';
 
     /**
      * @description: Partitioner: `random` - random distribution, `consistent` - CRC32 hash of key (Empty and NULL keys are
@@ -107,8 +107,7 @@ class TopicConfParam
      * @defaultValue: consistent_random
      * @importance: high
      */
-    public const PARTITIONER = "partitioner";
-
+    public const PARTITIONER = 'partitioner';
 
     /**
      * @description: Custom partitioner callback (set with rd_kafka_topic_conf_set_partitioner_cb()) <br>*Type: pointer*
@@ -117,7 +116,7 @@ class TopicConfParam
      * @defaultValue:
      * @importance: low
      */
-    public const PARTITIONER_CB = "partitioner_cb";
+    public const PARTITIONER_CB = 'partitioner_cb';
 
     /**
      * @description: **EXPERIMENTAL**: subject to change or removal. **DEPRECATED** Message queue ordering comparator
@@ -128,7 +127,7 @@ class TopicConfParam
      * @defaultValue:
      * @importance: low
      */
-    public const MSG_ORDER_CMP = "msg_order_cmp";
+    public const MSG_ORDER_CMP = 'msg_order_cmp';
 
     /**
      * @description: Application opaque (set with rd_kafka_topic_conf_set_opaque()) <br>*Type: pointer*
@@ -137,7 +136,7 @@ class TopicConfParam
      * @defaultValue:
      * @importance: low
      */
-    public const OPAQUE = "opaque";
+    public const OPAQUE = 'opaque';
 
     /**
      * @description: Compression codec to use for compressing message sets. inherit = inherit global compression.codec
@@ -148,7 +147,7 @@ class TopicConfParam
      * @defaultValue: inherit
      * @importance: high
      */
-    public const COMPRESSION_CODEC = "compression.codec";
+    public const COMPRESSION_CODEC = 'compression.codec';
 
     /**
      * @description: Alias for `compression.codec`: compression codec to use for compressing message sets.
@@ -160,7 +159,7 @@ class TopicConfParam
      * @defaultValue: none
      * @importance: medium
      */
-    public const COMPRESSION_TYPE = "compression.type";
+    public const COMPRESSION_TYPE = 'compression.type';
 
     /**
      * @description: Compression level parameter for algorithm selected by configuration property `compression.codec`.
@@ -173,7 +172,7 @@ class TopicConfParam
      * @defaultValue: -1
      * @importance: medium
      */
-    public const COMPRESSION_LEVEL = "compression.level";
+    public const COMPRESSION_LEVEL = 'compression.level';
 
     /**
      * @description: **DEPRECATED** [**LEGACY PROPERTY:** This property is used by the simple legacy consumer only.
@@ -189,7 +188,7 @@ class TopicConfParam
      * @defaultValue: true
      * @importance: low
      */
-    public const AUTO_COMMIT_ENABLE = "auto.commit.enable";
+    public const AUTO_COMMIT_ENABLE = 'auto.commit.enable';
 
     /**
      * @description: **DEPRECATED** Alias for `auto.commit.enable`: [**LEGACY PROPERTY:** This property is used by the simple
@@ -205,7 +204,7 @@ class TopicConfParam
      * @defaultValue: true
      * @importance: low
      */
-    public const ENABLE_AUTO_COMMIT = "enable.auto.commit";
+    public const ENABLE_AUTO_COMMIT = 'enable.auto.commit';
 
     /**
      * @description: [**LEGACY PROPERTY:** This setting is used by the simple legacy consumer only. When using the high-level
@@ -217,7 +216,7 @@ class TopicConfParam
      * @defaultValue: 60000
      * @importance: high
      */
-    public const AUTO_COMMIT_INTERVAL_MS = "auto.commit.interval.ms";
+    public const AUTO_COMMIT_INTERVAL_MS = 'auto.commit.interval.ms';
 
     /**
      * @description: Action to take when there is no initial offset in offset store or the desired offset is out of range: 'smallest','earliest'
@@ -242,7 +241,7 @@ class TopicConfParam
      * @defaultValue: .
      * @importance: low
      */
-    public const OFFSET_STORE_PATH = "offset.store.path";
+    public const OFFSET_STORE_PATH = 'offset.store.path';
 
     /**
      * @description: **DEPRECATED** fsync() interval for the offset file, in milliseconds. Use -1 to disable syncing, and 0
@@ -254,7 +253,7 @@ class TopicConfParam
      * @defaultValue: -1
      * @importance: low
      */
-    public const OFFSET_STORE_SYNC_INTERVAL_MS = "offset.store.sync.interval.ms";
+    public const OFFSET_STORE_SYNC_INTERVAL_MS = 'offset.store.sync.interval.ms';
 
     /**
      * @description: **DEPRECATED** Offset commit store method: 'file'
@@ -266,7 +265,7 @@ class TopicConfParam
      * @defaultValue: broker
      * @importance: low
      */
-    public const OFFSET_STORE_METHOD = "offset.store.method";
+    public const OFFSET_STORE_METHOD = 'offset.store.method';
 
     /**
      * @description: Maximum number of messages to dispatch in one `rd_kafka_consume_callback*()` call (0 = unlimited) <br>*Type: integer*
@@ -275,5 +274,5 @@ class TopicConfParam
      * @defaultValue: 0
      * @importance: low
      */
-    public const CONSUME_CALLBACK_MAX_MESSAGES = "consume.callback.max.messages";
+    public const CONSUME_CALLBACK_MAX_MESSAGES = 'consume.callback.max.messages';
 }

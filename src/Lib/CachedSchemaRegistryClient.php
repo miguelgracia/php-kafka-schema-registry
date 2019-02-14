@@ -1,10 +1,11 @@
 <?php
+
 namespace Kafka\SchemaRegistry\Lib;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
-
 use AvroSchema;
+
 /**
  * Client that talk to a schema registry over http
  *
@@ -33,7 +34,7 @@ class CachedSchemaRegistryClient
 
     /**
      * @param string $url
-     * @param int $maxSchemasPerSubject
+     * @param int    $maxSchemasPerSubject
      */
     public function __construct($url, $maxSchemasPerSubject = 1000)
     {
@@ -51,8 +52,8 @@ class CachedSchemaRegistryClient
      *
      * Multiple instances of the same schema will result in cache misses.
      *
-     * @param string $subject Subject name
-     * @param AvroSchema $schema Avro schema to be registered
+     * @param string     $subject Subject name
+     * @param AvroSchema $schema  Avro schema to be registered
      *
      * @return int
      */
@@ -66,15 +67,15 @@ class CachedSchemaRegistryClient
             }
         }
 
-        $url = sprintf('/subjects/%s/versions', $subject);
+        $url                     = sprintf('/subjects/%s/versions', $subject);
         list($status, $response) = $this->sendRequest($url, 'POST', json_encode(['schema' => (string) $schema]));
 
         if ($status === 409) {
             throw new \RuntimeException('Incompatible Avro schema');
-        } else if ($status === 422) {
+        } elseif ($status === 422) {
             throw new \RuntimeException('Invalid Avro schema');
-        } else if (!($status >= 200 || $status < 300)) {
-            throw new \RuntimeException('Unable to register schema. Error code: '.$status);
+        } elseif (!($status >= 200 || $status < 300)) {
+            throw new \RuntimeException('Unable to register schema. Error code: ' . $status);
         }
 
         $schemaId = $response['id'];
@@ -86,7 +87,7 @@ class CachedSchemaRegistryClient
     /**
      * Returns the version of a registered schema
      *
-     * @param string $subject
+     * @param string     $subject
      * @param AvroSchema $schema
      *
      * @return int
@@ -103,7 +104,7 @@ class CachedSchemaRegistryClient
     /**
      * Returns the id of a registered schema
      *
-     * @param string $subject
+     * @param string     $subject
      * @param AvroSchema $schema
      *
      * @return int
@@ -120,16 +121,16 @@ class CachedSchemaRegistryClient
     /**
      * Fetch and caches the details of a schema
      *
-     * @param string $subject
+     * @param string     $subject
      * @param AvroSchema $schema
      */
     protected function cacheSchemaDetails($subject, AvroSchema $schema)
     {
         $url = sprintf('/subjects/%s', $subject);
-        
+
         list($status, $response) = $this->sendRequest($url, 'POST', json_encode(['schema' => (string) $schema]));
         if (!($status >= 200 || $status < 300)) {
-            throw new \RuntimeException('Unable to get schema details. Error code: '.$status);
+            throw new \RuntimeException('Unable to get schema details. Error code: ' . $status);
         }
 
         $response['schema'] = $schema;
@@ -151,13 +152,13 @@ class CachedSchemaRegistryClient
             return $this->idToSchema[$schemaId];
         }
 
-        $url = sprintf('/schemas/ids/%d', $schemaId);
+        $url                     = sprintf('/schemas/ids/%d', $schemaId);
         list($status, $response) = $this->sendRequest($url, 'GET');
 
         if ($status === 404) {
             throw new RuntimeException('Schema not found');
-        } else if (!($status >= 200 || $status < 300)) {
-            throw new \RuntimeException('Unable to get schema for the specific ID: '.$status);
+        } elseif (!($status >= 200 || $status < 300)) {
+            throw new \RuntimeException('Unable to get schema for the specific ID: ' . $status);
         }
 
         $schema = AvroSchema::parse($response['schema']);
@@ -173,25 +174,25 @@ class CachedSchemaRegistryClient
             //return $this->subjectVersionToSchema[$subject][$version];
         }
 
-        $url = sprintf('/subjects/%s/versions/%d', $subject, $version);
+        $url                     = sprintf('/subjects/%s/versions/%d', $subject, $version);
         list($status, $response) = $this->sendRequest($url, 'GET');
-        
+
         if ($status === 404) {
             throw new RuntimeException('Schema not found');
-        } else if (!($status >= 200 || $status < 300)) {
-            throw new \RuntimeException('Unable to get schema for the specific ID: '.$status);
+        } elseif (!($status >= 200 || $status < 300)) {
+            throw new \RuntimeException('Unable to get schema for the specific ID: ' . $status);
         }
-        
+
         $schema = AvroSchema::parse($response['schema']);
-        
+
         $this->cacheSchemaDetails($subject, $schema);
-        
+
         return $schema;
     }
 
     private function sendRequest($url, $method = 'GET', $body = null, $headers = null)
     {
-        $headers = (array) $headers;
+        $headers           = (array) $headers;
         $headers['Accept'] = 'application/vnd.schemaregistry.v1+json, application/vnd.schemaregistry+json, application/json';
 
         if ($body) {
@@ -214,15 +215,15 @@ class CachedSchemaRegistryClient
             default:
                 throw new \RuntimeException('Invalid HTTP method');
         }
-        
+
         //$response = $this->client->send($request);
 
         return [$response->getStatusCode(), json_decode($response->getBody(true), true)];
     }
 
     /**
-     * @param AvroSchema $schema
-     * @param int $schemaId
+     * @param AvroSchema  $schema
+     * @param int         $schemaId
      * @param string|null $subject
      * @param string|null $version
      */
@@ -251,9 +252,9 @@ class CachedSchemaRegistryClient
 
     /**
      * @param \SplObjectStorage[] $cache
-     * @param string $subject
-     * @param AvroSchema $schema
-     * @param string $value
+     * @param string              $subject
+     * @param AvroSchema          $schema
+     * @param string              $value
      */
     private function addToCache(&$cache, $subject, AvroSchema $schema, $value)
     {

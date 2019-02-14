@@ -1,4 +1,5 @@
 <?php
+
 namespace Kafka\SchemaRegistry\Lib;
 
 use RdKafka\Conf;
@@ -18,7 +19,6 @@ class AvroConsumer extends KafkaConsumer
         parent::__construct($conf);
 
         $this->serializer = new MessageSerializer(new CachedSchemaRegistryClient($registryUrl), $options);
-
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 namespace Kafka\SchemaRegistry\Constants;
 
 class ConsumerConfParam extends KafkaConfParam
@@ -12,8 +13,7 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue:
      * @importance: high
      */
-    public const GROUP_ID = "group.id";
-
+    public const GROUP_ID = 'group.id';
 
     /**
      * @description: Name of partition assignment strategy to use when elected group leader assigns partitions to
@@ -24,7 +24,7 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue: range,roundrobin
      * @importance: medium
      */
-    public const PARTITION_ASSIGNMENT_STRATEGY = "partition.assignment.strategy";
+    public const PARTITION_ASSIGNMENT_STRATEGY = 'partition.assignment.strategy';
 
     /**
      * @description: Client group session and failure detection timeout. The consumer sends periodic heartbeats
@@ -39,8 +39,7 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue: 10000
      * @importance: high
      */
-    public const SESSION_TIMEOUT_MS = "session.timeout.ms";
-
+    public const SESSION_TIMEOUT_MS = 'session.timeout.ms';
 
     /**
      * @description: Group session keepalive heartbeat interval. <br>*Type: integer*
@@ -49,7 +48,7 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue: 3000
      * @importance: low
      */
-    public const HEARTBEAT_INTERVAL_MS = "heartbeat.interval.ms";
+    public const HEARTBEAT_INTERVAL_MS = 'heartbeat.interval.ms';
 
     /**
      * @description: Group protocol type <br>*Type: string*
@@ -58,7 +57,7 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue: consumer
      * @importance: low
      */
-    public const GROUP_PROTOCOL_TYPE = "group.protocol.type";
+    public const GROUP_PROTOCOL_TYPE = 'group.protocol.type';
 
     /**
      * @description: How often to query for the current client group coordinator. If the currently assigned coordinator
@@ -70,8 +69,7 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue: 600000
      * @importance: low
      */
-    public const COORDINATOR_QUERY_INTERVAL_MS = "coordinator.query.interval.ms";
-
+    public const COORDINATOR_QUERY_INTERVAL_MS = 'coordinator.query.interval.ms';
 
     /**
      * @description: Maximum allowed time between calls to consume messages (e.g., rd_kafka_consumer_poll()) for high-level
@@ -87,7 +85,7 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue: 300000
      * @importance: high
      */
-    public const MAX_POLL_INTERVAL_MS = "max.poll.interval.ms";
+    public const MAX_POLL_INTERVAL_MS = 'max.poll.interval.ms';
 
     /**
      * @description: Automatically and periodically commit offsets in the background. Note: setting this to false does not prevent
@@ -99,7 +97,7 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue: true
      * @importance: high
      */
-    public const ENABLE_AUTO_COMMIT = "enable.auto.commit";
+    public const ENABLE_AUTO_COMMIT = 'enable.auto.commit';
 
     /**
      * @description: The frequency in milliseconds that the consumer offsets are committed (written) to offset storage. (0 = disable).
@@ -110,7 +108,7 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue: 5000
      * @importance: medium
      */
-    public const AUTO_COMMIT_INTERVAL_MS = "auto.commit.interval.ms";
+    public const AUTO_COMMIT_INTERVAL_MS = 'auto.commit.interval.ms';
 
     /**
      * @description: Automatically store offset of last message provided to application. The offset store is an in-memory store of
@@ -121,7 +119,7 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue: true
      * @importance: high
      */
-    public const ENABLE_AUTO_OFFSET_STORE = "enable.auto.offset.store";
+    public const ENABLE_AUTO_OFFSET_STORE = 'enable.auto.offset.store';
 
     /**
      * @description: Minimum number of messages per topic+partition librdkafka tries to maintain in the local
@@ -132,7 +130,7 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue: 100000
      * @importance: medium
      */
-    public const QUEUED_MIN_MESSAGES = "queued.min.messages";
+    public const QUEUED_MIN_MESSAGES = 'queued.min.messages';
 
     /**
      * @description: Maximum number of kilobytes per topic+partition in the local consumer queue. This value may be overshot by
@@ -143,7 +141,7 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue: 1048576
      * @importance: medium
      */
-    public const QUEUED_MAX_MESSAGES_KBYTES = "queued.max.messages.kbytes";
+    public const QUEUED_MAX_MESSAGES_KBYTES = 'queued.max.messages.kbytes';
 
     /**
      * @description: Maximum time the broker may wait to fill the response with fetch.min.bytes. <br>*Type: integer*
@@ -152,7 +150,7 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue: 100
      * @importance: low
      */
-    public const FETCH_WAIT_MAX_MS = "fetch.wait.max.ms";
+    public const FETCH_WAIT_MAX_MS = 'fetch.wait.max.ms';
 
     /**
      * @description: Initial maximum number of bytes per topic+partition to request when fetching messages from the broker.
@@ -164,7 +162,7 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue: 1048576
      * @importance: medium
      */
-    public const FETCH_MESSAGE_MAX_BYTES = "fetch.message.max.bytes";
+    public const FETCH_MESSAGE_MAX_BYTES = 'fetch.message.max.bytes';
 
     /**
      * @description: Alias for `fetch.message.max.bytes`: Initial maximum number of bytes per topic+partition to request
@@ -176,7 +174,7 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue: 1048576
      * @importance: medium
      */
-    public const MAX_PARTITION_FETCH_BYTES = "max.partition.fetch.bytes";
+    public const MAX_PARTITION_FETCH_BYTES = 'max.partition.fetch.bytes';
 
     /**
      * @description: Maximum amount of data the broker shall return for a Fetch request. Messages are fetched in batches
@@ -191,7 +189,7 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue: 52428800
      * @importance: medium
      */
-    public const FETCH_MAX_BYTES = "fetch.max.bytes";
+    public const FETCH_MAX_BYTES = 'fetch.max.bytes';
 
     /**
      * @description: Minimum number of bytes the broker responds with. If fetch.wait.max.ms expires the accumulated data
@@ -201,7 +199,7 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue: 1
      * @importance: low
      */
-    public const FETCH_MIN_BYTES = "fetch.min.bytes";
+    public const FETCH_MIN_BYTES = 'fetch.min.bytes';
 
     /**
      * @description: How long to postpone the next fetch request for a topic+partition in case of a fetch error. <br>*Type: integer*
@@ -210,7 +208,7 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue: 500
      * @importance: medium
      */
-    public const FETCH_ERROR_BACKOFF_MS = "fetch.error.backoff.ms";
+    public const FETCH_ERROR_BACKOFF_MS = 'fetch.error.backoff.ms';
 
     /**
      * @description: **DEPRECATED** Offset commit store method: 'file' - DEPRECATED: local file store (offset.store.path, et.al),
@@ -221,7 +219,7 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue: broker
      * @importance: low
      */
-    public const OFFSET_STORE_METHOD = "offset.store.method";
+    public const OFFSET_STORE_METHOD = 'offset.store.method';
 
     /**
      * @description: Message consume callback (set with rd_kafka_conf_set_consume_cb()) <br>*Type: pointer*
@@ -230,7 +228,7 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue:
      * @importance: low
      */
-    public const CONSUME_CB = "consume_cb";
+    public const CONSUME_CB = 'consume_cb';
 
     /**
      * @description: Called after consumer group has been rebalanced (set with rd_kafka_conf_set_rebalance_cb()) <br>*Type: pointer*
@@ -239,7 +237,7 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue:
      * @importance: low
      */
-    public const REBALANCE_CB = "rebalance_cb";
+    public const REBALANCE_CB = 'rebalance_cb';
 
     /**
      * @description: Offset commit result propagation callback. (set with rd_kafka_conf_set_offset_commit_cb()) <br>*Type: pointer*
@@ -248,7 +246,7 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue:
      * @importance: low
      */
-    public const OFFSET_COMMIT_CB = "offset_commit_cb";
+    public const OFFSET_COMMIT_CB = 'offset_commit_cb';
 
     /**
      * @description: Emit RD_KAFKA_RESP_ERR__PARTITION_EOF event whenever the consumer reaches the end of a partition. <br>*Type: boolean*
@@ -257,7 +255,7 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue: false
      * @importance: low
      */
-    public const ENABLE_PARTITION_EOF = "enable.partition.eof";
+    public const ENABLE_PARTITION_EOF = 'enable.partition.eof';
 
     /**
      * @description: Verify CRC32 of consumed messages, ensuring no on-the-wire or on-disk corruption to the messages occurred.
@@ -268,5 +266,5 @@ class ConsumerConfParam extends KafkaConfParam
      * @defaultValue: false
      * @importance: medium
      */
-    public const CHECK_CRCS = "check.crcs";
+    public const CHECK_CRCS = 'check.crcs';
 }

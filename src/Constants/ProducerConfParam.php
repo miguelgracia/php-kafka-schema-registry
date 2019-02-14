@@ -1,4 +1,5 @@
 <?php
+
 namespace Kafka\SchemaRegistry\Constants;
 
 /**
@@ -20,7 +21,7 @@ class ProducerConfParam extends KafkaConfParam
      * @defaultValue: false
      * @importance: high
      */
-    public const ENABLE_IDEMPOTENCE = "enable.idempotence";
+    public const ENABLE_IDEMPOTENCE = 'enable.idempotence';
 
     /**
      * @description: **EXPERIMENTAL**: subject to change or removal. When set to `true`, any error that could result in a gap
@@ -33,7 +34,7 @@ class ProducerConfParam extends KafkaConfParam
      * @defaultValue: false
      * @importance: low
      */
-    public const ENABLE_GAPLESS_GUARANTEE = "enable.gapless.guarantee";
+    public const ENABLE_GAPLESS_GUARANTEE = 'enable.gapless.guarantee';
 
     /**
      * @description: Maximum number of messages allowed on the producer queue.
@@ -44,7 +45,7 @@ class ProducerConfParam extends KafkaConfParam
      * @defaultValue: 100000
      * @importance: high
      */
-    public const QUEUE_BUFFERING_MAX_MESSAGES = "queue.buffering.max.messages";
+    public const QUEUE_BUFFERING_MAX_MESSAGES = 'queue.buffering.max.messages';
 
     /**
      * @description: Maximum total message size sum allowed on the producer queue. This queue is shared by all topics and partitions.
@@ -55,7 +56,7 @@ class ProducerConfParam extends KafkaConfParam
      * @defaultValue: 1048576
      * @importance: high
      */
-    public const QUEUE_BUFFERING_MAX_KBYTES = "queue.buffering.max.kbytes";
+    public const QUEUE_BUFFERING_MAX_KBYTES = 'queue.buffering.max.kbytes';
 
     /**
      * @description: Delay in milliseconds to wait for messages in the producer queue to accumulate before constructing message batches
@@ -67,7 +68,7 @@ class ProducerConfParam extends KafkaConfParam
      * @defaultValue: 0
      * @importance: high
      */
-    public const QUEUE_BUFFERING_MAX_MS = "queue.buffering.max.ms";
+    public const QUEUE_BUFFERING_MAX_MS = 'queue.buffering.max.ms';
 
     /**
      * @description: Alias for `queue.buffering.max.ms`: Delay in milliseconds to wait for messages in the producer queue
@@ -80,7 +81,7 @@ class ProducerConfParam extends KafkaConfParam
      * @defaultValue: 0
      * @importance: high
      */
-    public const LINGER_MS = "linger.ms";
+    public const LINGER_MS = 'linger.ms';
 
     /**
      * @description: How many times to retry sending a failing Message. **Note:** retrying may cause reordering unless
@@ -91,7 +92,7 @@ class ProducerConfParam extends KafkaConfParam
      * @defaultValue: 2
      * @importance: high
      */
-    public const MESSAGE_SEND_MAX_RETRIES = "message.send.max.retries";
+    public const MESSAGE_SEND_MAX_RETRIES = 'message.send.max.retries';
 
     /**
      * @description: Alias for `message.send.max.retries`: How many times to retry sending a failing Message.
@@ -102,7 +103,7 @@ class ProducerConfParam extends KafkaConfParam
      * @defaultValue: 2
      * @importance: high
      */
-    public const RETRIES = "retries";
+    public const RETRIES = 'retries';
 
     /**
      * @description: The backoff time in milliseconds before retrying a protocol request. <br>*Type: integer*
@@ -111,7 +112,7 @@ class ProducerConfParam extends KafkaConfParam
      * @defaultValue: 100
      * @importance: medium
      */
-    public const RETRY_BACKOFF_MS = "retry.backoff.ms";
+    public const RETRY_BACKOFF_MS = 'retry.backoff.ms';
 
     /**
      * @description: The threshold of outstanding not yet transmitted broker requests needed to backpressure
@@ -126,7 +127,7 @@ class ProducerConfParam extends KafkaConfParam
      * @defaultValue: 1
      * @importance: low
      */
-    public const QUEUE_BUFFERING_BACKPRESSURE_THRESHOLD = "queue.buffering.backpressure.threshold";
+    public const QUEUE_BUFFERING_BACKPRESSURE_THRESHOLD = 'queue.buffering.backpressure.threshold';
 
     /**
      * @description: compression codec to use for compressing message sets. This is the default value for all topics,
@@ -137,7 +138,7 @@ class ProducerConfParam extends KafkaConfParam
      * @defaultValue: none
      * @importance: medium
      */
-    public const COMPRESSION_CODEC = "compression.codec";
+    public const COMPRESSION_CODEC = 'compression.codec';
 
     /**
      * @description: Alias for `compression.codec`: compression codec to use for compressing message sets.
@@ -149,7 +150,7 @@ class ProducerConfParam extends KafkaConfParam
      * @defaultValue: none
      * @importance: medium
      */
-    public const COMPRESSION_TYPE = "compression.type";
+    public const COMPRESSION_TYPE = 'compression.type';
 
     /**
      * @description: Maximum number of messages batched in one MessageSet.
@@ -160,7 +161,7 @@ class ProducerConfParam extends KafkaConfParam
      * @defaultValue: 10000
      * @importance: medium
      */
-    public const BATCH_NUM_MESSAGES = "batch.num.messages";
+    public const BATCH_NUM_MESSAGES = 'batch.num.messages';
 
     /**
      * @description: Only provide delivery reports for failed messages. <br>*Type: boolean*
@@ -169,7 +170,7 @@ class ProducerConfParam extends KafkaConfParam
      * @defaultValue: false
      * @importance: low
      */
-    public const DELIVERY_REPORT_ONLY_ERROR = "delivery.report.only.error";
+    public const DELIVERY_REPORT_ONLY_ERROR = 'delivery.report.only.error';
 
     /**
      * @description: Delivery report callback (set with rd_kafka_conf_set_dr_cb()) <br>*Type: pointer*
@@ -178,7 +179,7 @@ class ProducerConfParam extends KafkaConfParam
      * @defaultValue:
      * @importance: low
      */
-    public const DR_CB = "dr_cb";
+    public const DR_CB = 'dr_cb';
 
     /**
      * @description: Delivery report callback (set with rd_kafka_conf_set_dr_msg_cb()) <br>*Type: pointer*
@@ -187,5 +188,5 @@ class ProducerConfParam extends KafkaConfParam
      * @defaultValue:
      * @importance: low
      */
-    public const DR_MSG_CB = "dr_msg_cb";
+    public const DR_MSG_CB = 'dr_msg_cb';
 }
