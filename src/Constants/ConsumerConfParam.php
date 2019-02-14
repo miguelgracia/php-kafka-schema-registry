@@ -2,6 +2,10 @@
 
 namespace Kafka\SchemaRegistry\Constants;
 
+/**
+ * Consumers config params.
+ * Provides a list of constants to use int consumption case
+ */
 class ConsumerConfParam extends KafkaConfParam
 {
     /**

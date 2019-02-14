@@ -3,8 +3,8 @@
 namespace Kafka\SchemaRegistry\Constants;
 
 /**
- * Kafka Consumer client which does avro schema decoding of messages.
- * Handles message deserialization.
+ * General Kafka config params.
+ * Provides a list of constants to use int consumption/production cases
  */
 class KafkaConfParam
 {
