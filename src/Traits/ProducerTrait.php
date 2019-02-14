@@ -61,7 +61,7 @@ trait ProducerTrait
             $format = mt_rand(0, 2);
             $format = $format === 2 ? null : $format;
 
-            $producer->produce(RD_KAFKA_PARTITION_UA, 0, is_array($item) ? $item : (array)$item, $key, null, null, MessageSerializer::MAGIC_BYTE_SUBJECT_VERSION);
+            $producer->produce(RD_KAFKA_PARTITION_UA, 0, is_array($item) ? $item : (array)$item, $key, null, null, MessageSerializer::MAGIC_BYTE_SCHEMAID);
         }
 
         $end = microtime(true);
