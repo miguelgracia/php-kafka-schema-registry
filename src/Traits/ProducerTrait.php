@@ -62,6 +62,13 @@ trait ProducerTrait
             $format = $format === 2 ? null : $format;
 
             $producer->produce(RD_KAFKA_PARTITION_UA, 0, is_array($item) ? $item : (array)$item, $key, null, null, MessageSerializer::MAGIC_BYTE_SCHEMAID);
+
+	    $this->kafka->poll(0);
+        }
+
+	// polling if the messages queue is not empty
+        while ($this->kafka->getOutQLen() > 0) {
+            $this->kafka->poll(50);
         }
 
         $end = microtime(true);
