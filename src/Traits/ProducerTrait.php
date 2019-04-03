@@ -26,13 +26,7 @@ trait ProducerTrait
     {
         $this->setSchemaRegistryAndBrokerList($schemaRegistryUrl, $brokerList);
 
-        if (null === $this->getSchemaSubject() || null === $this->getSchemaVersion()) {
-            throw new SchemaNotPreparedException('You must set the schema subject and schema version via setSchema($subject, $version = 1) before call prepare() method', 10);
-        }
-
         $this->initConfIfNeeded();
-
-        $this->prepareSchema();
 
         $this->conf->set(ProducerConfParam::COMPRESSION_TYPE, 'snappy');
         $this->conf->set(ProducerConfParam::LINGER_MS, '20');
@@ -42,6 +36,12 @@ trait ProducerTrait
 
     public function produce($topic, array $data, $key = null)
     {
+        if (null === $this->getSchemaSubject() || null === $this->getSchemaVersion()) {
+            throw new SchemaNotPreparedException('You must set the schema subject and schema version via setSchema($subject, $version = 1) before call prepare() method', 10);
+        }
+
+        $this->prepareSchema();
+
         //TODO Log it
         //echo "Producing " . sizeof($data). " messages to kafka topic '$topic'\n";
 
@@ -63,10 +63,10 @@ trait ProducerTrait
 
             $producer->produce(RD_KAFKA_PARTITION_UA, 0, is_array($item) ? $item : (array)$item, $key, null, null, MessageSerializer::MAGIC_BYTE_SCHEMAID);
 
-	    $this->kafka->poll(0);
+            $this->kafka->poll(0);
         }
 
-	// polling if the messages queue is not empty
+        // polling if the messages queue is not empty
         while ($this->kafka->getOutQLen() > 0) {
             $this->kafka->poll(50);
         }
